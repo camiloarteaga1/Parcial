@@ -4,8 +4,11 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
+        encrypt.cpp \
         inventario.cpp \
         main.cpp
 
 HEADERS += \
-    inventario.h
+    encrypt.h \
+    inventario.h \
+    plantillas.h

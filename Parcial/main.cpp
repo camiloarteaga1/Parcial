@@ -1,21 +1,16 @@
-#include <iostream>
-#include <fstream>
-#include <string.h>
+//#include <iostream>
+//#include <fstream>
+//#include <string.h>
 #include <windows.h>
 #include <map>
 #include <inventario.h>
+#include <plantillas.h>
 
 using namespace std;
 
 const string psAdmin = "../Archivos/ClaveAdmin.txt";
 
 //Funciones
-template <typename T>
-string leer(T dir);
-
-template <typename >
-bool validacion(T ps);
-
 int adm();
 int user();
 
@@ -60,12 +55,13 @@ int adm()
     cout << "Por favor escriba su clave:";
     cin >> ps;
 
-    while (validacion(ps) == false){ //Verifica si la clave es correcta
+    while (validacion(ps, psAdmin) == false){ //Verifica si la clave es correcta
 
         cout << "\nContrasena incorrecta,intente nuevamente" << endl;
         cout << "Ingrese de nuevo: ";
         cin >> ps;
     }
+
     system("cls");
     cout << "Bienvenido administrador" << endl;
 
@@ -84,7 +80,7 @@ int adm()
                 cout << "Productos disponibles: " << endl;
                 inv.imprimir(); //Imprime el inventario disponible
 
-                cout << "\nIngrese un producto a utilizar: ";
+                cout << "\nIngrese un producto del combo: ";
                 cin >> pr;
                 comb = comb + pr;
                 pr = "";
@@ -135,40 +131,4 @@ int user()
 {
 
     return 0;
-}
-
-//Valida la clave del admin
-template <typename T>
-bool validacion(T ps)
-{
-    string enps = leer(psAdmin); //String que contiene la contraseña del txt
-
-    for(unsigned int i = 0; i < enps.length() ; ++i){ //Compara termino a termino la clave
-        if (ps.at(i) != enps.at(i)) return false;
-    }
-
-    return true;
-}
-
-//Lee lo de un archivo y lo asigna a una variable
-template <typename T>
-string leer(T dir)
-{
-    ifstream archivo;
-    string txt;
-
-    archivo.open(dir.c_str(),ios::in);
-
-    if(!archivo.is_open()){ //Verifica si el archivo abrio exitosamente
-        std::cout << "Error al abrir el archivo" << endl;
-        exit(1);
-    }
-
-    while(!archivo.eof()) { //Lee linea a linea mientras no sea el final del archivo
-        getline(archivo, txt);
-    }
-
-    archivo.close(); //Cierra el archivo
-
-    return txt;
 }
