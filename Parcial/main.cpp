@@ -1,14 +1,21 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <string.h>
+#include <cstring>
 using namespace std;
 
-const string dirAdmin = "../Archivos/ClaveAdmin.txt";
+const string psAdmin = "../Archivos/ClaveAdmin.txt";
 
 //Funciones
-string leer(string dir);
-bool validacion(string dir, string ps);
+template <typename T>
+string leer(T dir);
+
+template <typename U>
+bool validacion(U ps);
+
 int adm();
+int user();
 
 int main()
 {
@@ -41,53 +48,60 @@ int main()
 int adm()
 {
     int opt = 0;
-    string id = "", psusu = "", saldo= "", data = "", codi = "", ps, txt;
+    string pr = "", psusu = "", saldo= "", data = "", codi = "", ps, txt, help = "Si";
     bool aux = false;
 
     cout << "\nBienvenido administrador" << endl;
     cout << "Por favor escriba su clave:";
     cin >> ps;
 
-    while (validacion(dirAdmin, ps) == false){ //Verifica si la clave es correcta
+    while (validacion(ps) == false){ //Verifica si la clave es correcta
 
         cout << "\nContrasena incorrecta,intente nuevamente" << endl;
-        cout << "Ingrese: ";
+        cout << "Ingrese de nuevo: ";
         cin >> ps;
     }
 
     cout << "\nOperacion a realizar: " << endl;
-    cout << "1.Ingresar usuarios" << "\n2.Salir" << endl;
+    cout << "1.Crear combos" << "\n2.Salir" << endl;
     cout << "Opcion: ";
     cin >> opt;
 
     if (opt == 1){
 
-        cout << "\nIngresar Usuario" << endl;
-        cout << "Escriba el documento: ";
-        cin >> id;
+        while (help == "Si"){
+            cout << "\nIngrese un producto del combo: ";
+            cin >> pr;
 
-        while (valnum(id) == false){ //Verifica si los caracteres son numericos
-
-            cout << "Ingrese solo caracteres numericos" << endl;
-            cout << "Escriba el documento: ";
-            cin >> id;
+            cout << "Desea ingresar otro producto?\nSi o No" << endl;
+            cin >> help;
         }
 
-        cout << "\nProceso finalizado" << endl;
+        cout << "\nCombo creado" << endl;
+
+        cout << "El valor es de: " << endl;
 
         }
 
     else if (opt == 2) return 0;
 
-    else cout << "Usted es tonto o se hace?";
+    else cout << "Reinicie.";
+
+    return 0;
+}
+
+//Despliega el menu del usuario
+int user()
+{
 
     return 0;
 }
 
 //Valida la clave del admin
-bool validacion(string dir, string ps)
+template <typename T>
+bool validacion(T ps)
 {
-    string enps = leer(dir); //String que contiene la contraseña del txt
+    string enps = leer(psAdmin); //String que contiene la contraseña del txt
 
     for(unsigned int i = 0; i < enps.length() ; ++i){ //Compara termino a termino la clave
         if (ps.at(i) != enps.at(i)) return false;
@@ -97,7 +111,8 @@ bool validacion(string dir, string ps)
 }
 
 //Lee lo de un archivo y lo asigna a una variable
-string leer(string dir)
+template <typename T>
+string leer(T dir)
 {
     ifstream archivo;
     string txt;
