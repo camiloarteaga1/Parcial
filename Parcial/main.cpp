@@ -1,9 +1,9 @@
 #include <iostream>
 #include <fstream>
 #include <string.h>
+#include <windows.h>
 #include <map>
 #include <inventario.h>
-#include <windows.h>
 
 using namespace std;
 
@@ -13,7 +13,7 @@ const string psAdmin = "../Archivos/ClaveAdmin.txt";
 template <typename T>
 string leer(T dir);
 
-template <typename T>
+template <typename >
 bool validacion(T ps);
 
 int adm();
@@ -31,7 +31,7 @@ int main()
         cout << "1. Administrador." << endl;
         cout << "2. Usuario." << endl;
         cout << "3. Salir." << endl;
-        cout << "\nOpcion: ";
+        cout << "Opcion: ";
         cin >> opt;
 
         if (opt == 1) adm();
@@ -51,7 +51,7 @@ int main()
 int adm()
 {
     int opt = 0, cont = 0;
-    string pr = "", psusu = "", saldo= "", data = "", codi = "", ps, txt, help = "Si", comb="";
+    string pr = "", id = "", unidades = "", ps, help = "Si", comb="";
     bool aux = false;
     map <int, string> combos;
     inventario inv;
@@ -76,7 +76,7 @@ int adm()
         cout << "Opcion: ";
         cin >> opt;
 
-        if (opt == 1){
+        if (opt == 1){ //Se empieza a crear el combo de acuerdo al inventario
 
             while (help == "Si"){
 
@@ -84,12 +84,18 @@ int adm()
                 cout << "Productos disponibles: " << endl;
                 inv.imprimir(); //Imprime el inventario disponible
 
-                cout << "\nIngrese un producto del combo: ";
+                cout << "\nIngrese un producto a utilizar: ";
                 cin >> pr;
                 comb = comb + pr;
                 pr = "";
 
-                cout << "Desea ingresar otro producto? Mayuscula inicial Si o No" << endl;
+                cout << "ID del producto: ";
+                cin >> id;
+
+                cout << "Unidades a utilizar: ";
+                cin >> unidades;
+
+                cout << "Desea ingresar otro producto? Mayuscula inicial Si o No: ";
                 cin >> help;
 
 
@@ -100,18 +106,26 @@ int adm()
             cout << "Combo creado" << endl;
 
             ++cont;
-            combos.insert({cont, comb});
+            combos.insert({cont, comb}); // Se agrega el combo al mapa
 
             cout << "El combo es: Combo " << cont << " " << combos[cont] << endl;
 
             cout << "El valor es de: \n" << endl;
 
             help = "Si";
+
+            inv.descript(); //Descripcion del combo ingresado
         }
 
-        else if (opt == 2) aux = true;
+        else if (opt == 2){
+            aux = true;
+            system("cls");
+        }
 
-        else cout << "Ingrese un numero valido." << endl;
+        else{
+            cout << "Ingrese un numero valido." << endl;
+            system("cls");
+        }
     }
     return 0;
 }

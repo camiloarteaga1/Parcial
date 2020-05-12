@@ -64,3 +64,15 @@ string inventario::leer(string dir)
 
     return txt;
 }
+
+void inventario::descript()
+{
+    string descript = "";
+
+    cout << "Oferta del combo: ";
+
+    cin.ignore(100, '\n');
+    getline (cin, descript);
+
+    cout << "Descripcion del combo: " << descript << endl;
+}

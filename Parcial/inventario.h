@@ -12,7 +12,8 @@ class inventario
 public:
     inventario();
     ~inventario();
-    void imprimir();
+    void imprimir(); //Imprime el inventario para el admin
+    void descript(); //Guarda la descripcion del combo a ofrecer
 
 private:
     const string dirInventario = "../Archivos/Inventario.txt";
