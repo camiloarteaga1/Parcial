@@ -9,7 +9,6 @@ using namespace std;
 class encrypt
 {
 public:
-    encrypt();
     encrypt(string a, string b);
     ~encrypt();
 

@@ -57,12 +57,12 @@ int adm()
     bool aux = false;
     map <int, string> combos;
     inventario inv;
-    encrypt data(ps, diraux);
 
     cout << "\nIngresando como administrador" << endl;
     cout << "Por favor escriba su clave:";
     cin >> ps;
 
+    encrypt data(ps, diraux);
     data.convert(); //Se convierte el string ingresado en bin
     code = data.codificacion2(semi); //Contraseña encriptada ingresada por el usuario
     borrar(diraux); //Se borra el archivo aux

@@ -102,7 +102,7 @@ void encrypt::convert()
 {
     ofstream archivo;
 
-    archivo.open(dir, ios::out);
+    archivo.open(dir.c_str(), ios::out);
 
     if (archivo.fail()){
         cout << "No se pudo abrir el archivo";

@@ -23,7 +23,7 @@ string leer(T dir)
     ifstream archivo;
     string txt;
 
-    archivo.open(dir,ios::in);
+    archivo.open(dir.c_str(),ios::in);
 
     if(!archivo.is_open()){ //Verifica si el archivo abrio exitosamente
         std::cout << "Error al abrir el archivo" << endl;
