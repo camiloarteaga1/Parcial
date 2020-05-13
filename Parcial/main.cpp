@@ -5,10 +5,17 @@
 #include <map>
 #include <inventario.h>
 #include <plantillas.h>
+#include <encrypt.h>
 
 using namespace std;
 
-const string psAdmin = "../Archivos/ClaveAdmin.txt";
+//Archivos
+const string psAdmin = "C:/Users/Dell/Desktop/Informatica/Parcial/Parcial/Archivos/ClaveAdmin.txt";
+const string diraux = "../Archivos/txtAux.txt"; //Direccion auxiliar, no hay que cambiarla
+
+//La clave del adm está codificada por defecto con esa semilla
+//Semilla codificacion
+unsigned int semi = 4;
 
 //Funciones
 int adm();
@@ -46,20 +53,29 @@ int main()
 int adm()
 {
     int opt = 0, cont = 0;
-    string pr = "", id = "", unidades = "", ps, help = "Si", comb="";
+    string pr = "", id = "", unidades = "", ps, help = "Si", comb="", code;
     bool aux = false;
     map <int, string> combos;
     inventario inv;
+    encrypt data(ps, diraux);
 
     cout << "\nIngresando como administrador" << endl;
     cout << "Por favor escriba su clave:";
     cin >> ps;
 
-    while (validacion(ps, psAdmin) == false){ //Verifica si la clave es correcta
+    data.convert(); //Se convierte el string ingresado en bin
+    code = data.codificacion2(semi); //Contraseña encriptada ingresada por el usuario
+    borrar(diraux); //Se borra el archivo aux
+
+    while (validacion(psAdmin, code) == false){ //Verifica si la clave es correcta
 
         cout << "\nContrasena incorrecta,intente nuevamente" << endl;
         cout << "Ingrese de nuevo: ";
         cin >> ps;
+
+        data.convert(); //Se convierte el string ingresado en bin
+        code = data.codificacion2(semi); //Contraseña encriptada ingresada por el usuario
+        borrar(diraux); //Se borra el archivo aux
     }
 
     system("cls");
