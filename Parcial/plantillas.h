@@ -7,13 +7,27 @@
 
 using namespace std;
 
-//Borra un archivo
+const string diraux = "../Archivos/txtAux.txt"; //Direccion auxiliar, no hay que cambiarla
+
+//Valida la clave del admin
 template <typename T>
-void borrar(T dir)
+bool validacion(T ps, T psAdmin, unsigned int semi)
 {
-    if(remove(dir.c_str()) != 0) //Elimina un archivo
-       perror("Error al borrar archivo!.");
-}
+    {
+        string enps = leer(psAdmin); //String que contiene la contraseña encriptada del sudo
+        string code;
+
+        convert(ps, diraux);
+        code = codificacion2(diraux, semi); //Contraseña encriptada ingresada por el usuario
+
+        for(unsigned int i = 0; i < enps.length() ; ++i){ //Compara termino a termino la clave
+            if (code.at(i) != enps.at(i)) return false;
+        }
+
+        borrar(diraux);
+
+        return true;
+    }
 
 //Lee lo de un archivo y lo asigna a una variable
 template <typename T>
@@ -38,17 +52,4 @@ string leer(T dir)
     return txt;
 }
 
-
-//Valida la clave del admin
-template <typename T>
-bool validacion(T psAdmin, T code)
-{
-    string enps = leer(psAdmin); //String que contiene la contraseña encriptada del sudo
-
-    for(unsigned int i = 0; i < enps.length() ; ++i){ //Compara termino a termino la clave
-        if (code.at(i) != enps.at(i)) return false;
-    }
-
-    return true;
-}
 #endif // PLANTILLAS_H

@@ -1,10 +1,5 @@
 #include "inventario.h"
 
-template<typename T> void printElement(T t, const int& width)
-{
-    cout << left << setw(width) << setfill(' ') << t;
-}
-
 inventario::inventario()
 {
 
@@ -23,13 +18,6 @@ void inventario::imprimir()
         std::cout << "Error al abrir el archivo" << endl;
         exit(1);
     }
-
-    printElement("ID:", 7);
-    printElement("Producto:", 45);
-    printElement("Unidades:", 15);
-    printElement("Costo:", 15);
-    cout << endl;
-
     for (string line; getline (invent, line); ){
 
         string product = "", uni = "", id = "", costo = "";
@@ -51,16 +39,8 @@ void inventario::imprimir()
             costo += line.at(i);
         }
 
-
-        if (id != "ID"){
-            printElement(id, 7);
-            printElement(product, 45);
-            printElement(uni, 15);
-            printElement(costo, 15);
-            cout << endl;
-        }
+        if (id != "ID") cout << "ID: " << id << " Producto: " << product << " Unidades: " << uni << " Costo: " << costo << endl;
     }
-
     invent.close();
 }
 

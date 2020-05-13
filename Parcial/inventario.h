@@ -5,7 +5,6 @@
 #include <string>
 #include <cstring>
 #include <fstream>
-#include <iomanip>
 using namespace std;
 
 class inventario

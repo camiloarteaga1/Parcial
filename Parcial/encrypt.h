@@ -9,27 +9,11 @@ using namespace std;
 class encrypt
 {
 public:
-    encrypt(string a, string b);
+    encrypt();
     ~encrypt();
-
-    string codificacion2(unsigned int seed); //Codifica lo que haya en un archivo de texto
-    string decodificacion2(string bin, unsigned int seed); //Decodifica lo que haya en un archivo de texto
-    string bin_to_string(string bin); //Convierte de binario a string
-    void convert(); //Convierte un string en binario
-    void nuename(string dirtemp, string diruser); //Renombra un archivo
-    void escribir(string dir, string txt); //Escribe en un archivo el string recibido
-
-
+    void codificar();
+    string decodificar();
 private:
-    string texto, dir;
-
-    string leer(string dir); //Lee lo de un archivo y lo asigana a una variable
-    int tobin(int numero); //Para convertir a binario
-    int dig_num(int num); //Da los digitos de un numero
-    void fun_a(int *px, int *py); //Para codificar
-    void fun_b(int a[], int tam); //Para codificar
-    void desfun_b(int a[], int tam); //Para decodificar
-
 
 };
 
