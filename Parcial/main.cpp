@@ -10,7 +10,7 @@
 using namespace std;
 
 //Archivos
-const string psAdmin = "C:/Users/Dell/Desktop/Informatica/Parcial/Parcial/Archivos/ClaveAdmin.txt";
+const string psAdmin = "../Archivos/ClaveAdmin.txt";
 const string diraux = "../Archivos/txtAux.txt"; //Direccion auxiliar, no hay que cambiarla
 
 //La clave del adm está codificada por defecto con esa semilla
@@ -73,6 +73,7 @@ int adm()
         cout << "Ingrese de nuevo: ";
         cin >> ps;
 
+        encrypt data(ps, diraux);
         data.convert(); //Se convierte el string ingresado en bin
         code = data.codificacion2(semi); //Contraseña encriptada ingresada por el usuario
         borrar(diraux); //Se borra el archivo aux

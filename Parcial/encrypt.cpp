@@ -279,6 +279,7 @@ int encrypt::dig_num(int num)
     return k;
 }
 
+//Renombra un archivo
 void encrypt::nuename(string dirtemp, string diruser)
 {
     int newname;
