@@ -61,12 +61,13 @@ void inventario::imprimir()
     printElement("Producto:", 25);
     printElement("Paquetes:", 15);
     printElement("Unidades:", 15);
+    printElement("Unidades en total:", 18);
     printElement("Costo unidad en pesos:", 15);
     cout << endl;
 
     for (string line; getline (invent, line); ){
 
-        string product = "", uni = "", id = "", costo = "", paq = "";
+        string product = "", uni = "", id = "", costo = "", paq = "", total = "";
 
 
         for (unsigned int i = 0; i < line.find(","); ++i){ //Hasta que encuentre la ","
@@ -85,7 +86,11 @@ void inventario::imprimir()
             uni += line.at(i); //String con la cant de unidades por paquetes
         }
 
-        for (unsigned int i = line.find(":") + 1; i < line.length(); ++i){ //Desde el ":" hasta el final
+        for (unsigned int i = line.find(":") + 1; i < line.find("|"); ++i){ //Desde el ":" hasta el "|"
+            total += line.at(i); //String con la cant de unidades en total
+        }
+
+        for (unsigned int i = line.find("|") + 1; i < line.length(); ++i){ //Desde el ":" hasta el final
             costo += line.at(i); //String con el costo total de los paquetes
         }
 
@@ -94,6 +99,7 @@ void inventario::imprimir()
             printElement(product, 25);
             printElement(paq, 15);
             printElement(uni, 15);
+            printElement(total, 18);
             cout << "$";
             printElement(costo, 15);
             cout << endl;
@@ -188,6 +194,7 @@ int inventario::compra(string comb, string cant, string dircombo)
                     else if (j == product.find(";")){
                         ++j;
                         cantip = product[j];
+                    }
 
                 }
 
