@@ -30,7 +30,7 @@ void inventario::escribir(string dir, string txt)
 
 void inventario::combos(map <int, vector<string>> combo, string dircombo)
 {
-    string combito = "Combo";
+    string combito = "";
     int num = 0;
 
     auto v = combo.begin();
@@ -173,38 +173,43 @@ int inventario::compra(string comb, string cant, string dircombo)
         for (unsigned int i = 0; i < line.find(":"); ++i){ //Hasta que encuentre la ","
             idc += line.at(i); //String con el ID del combo
         }
-        for (unsigned int i = 0; i < 4; ++i){
+
+        for (unsigned int i = 0; i < idc.length(); ++i){
             if (idc.at(i) != comb.at(i)) //Compara el ID del combo con los del archivo
                 break;
 
-            else if (i == idc.length())
+            else if (idc[i] == comb[i])
                 aux = true;
         }
 
         if (aux == true){
-            for (unsigned int i = line.find(":") ; i == line.find("|"); ++i){ //Desde el ":" hasta el "|"
+            aux = false;
+            for (unsigned int i = line.find(":") ; i <= line.find("|"); ++i){ //Desde el ":" hasta el "|"
                 product += line.at(i); //String con el combo
+            }
 
-                for(unsigned int j = 0; j < product.find("|"); ++j){
+            for(unsigned int j = 0; j < product.find("|"); ++j){
 
-                    if (j == product.find(":")){
-                        ++j;
-                        idp = product[j];
-                    }
-                    else if (j == product.find(";")){
-                        ++j;
-                        cantip = product[j];
-                    }
-
-                }
+                if (product[j] == ':'){
+                    ++j;
+                    idp = product[j];
+                    if (product[j] != '|') cout << ":" << idp;
+                 }
+                 else if (product[j] == ';'){
+                    ++j;
+                    cantip = to_string(int(product[j]-48)*stoi(cant));
+                    cout << ";" << cantip;
+                 }
 
             }
             for (unsigned int i = line.find("|") + 1; i < line.length(); ++i){
-                costo = line.at(i);
-                costo = stoi(costo); //Debo continuar con otra funcion
+                costo += line.at(i);
             }
+            costo = to_string(stoi(costo) * stoi(cant)); //Debo continuar con otra funcion
+            cout << "$" << costo << endl;
         }
 
     }
     invent.close();
+    return 0;
 }

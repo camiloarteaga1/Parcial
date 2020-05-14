@@ -42,7 +42,7 @@ int main()
         cout << "Opcion: ";
         cin >> opt;
 
-        if (opt == 1) adm(var, cont);
+        if (opt == 1) var = adm(var, cont);
 
         else if (opt == 2) user();
 
@@ -236,9 +236,9 @@ int user()
     system("cls");
 
     while (aux == false){
-        cout << "Bienvenido señor usuario" << endl;
+        cout << "Bienvenido usuario" << endl;
         cout << "\nQue desea hacer? Escriba solo el numero" << endl;
-        cout << "1. Registrarse" << "\n2. Iniciar sesion" << "\n3. Salir" << "Opcion: ";
+        cout << "1. Registrarse" << "\n2. Iniciar sesion" << "\n3. Salir" << "\nOpcion: ";
         cin >> opt;
 
         if (opt == 1){
@@ -269,6 +269,8 @@ int user()
 
                 cout << "Cuantos desea: ";
                 cin >> cant;
+
+                combitos.compra(combo, cant, dirCombos);
             }
 
             else{
