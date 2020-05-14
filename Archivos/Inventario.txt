@@ -1,3 +1,11 @@
-ID,Producto;Cantidad:Costo
-1,Vasos 9oz x 9 unidades;7:$84000
-2,Paquete x6 unidades pan perro;7:$18550
+ID,Producto;Paquetes~Unidades:Costo unidad (pesos)
+1,Vasos 9oz;7~9:1500
+2,Pan perro;7~9:500
+3,Cocacola personal;10~15:2500
+4,Nachos;15~6:3500
+5,Crispetas;20~10:3000
+6,Salchicha;7~9:800
+7,Chocolatina;7~20:500
+8,Papas;10~12:1000
+9,Ice bebida;12~6:3500
+10,Figurita;20~5:1000

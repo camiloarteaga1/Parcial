@@ -13,6 +13,39 @@ inventario::~inventario()
 {
 
 }
+
+//Ecribir en un archivo
+void inventario::escribir(string dir, string txt)
+{
+    ofstream archivo;
+    archivo.open(dir, ios::app);
+    if (archivo.fail()){
+        cout << "No se pudo abrir el archivo";
+        exit(1);
+    }
+
+    archivo << txt << "\n";
+    archivo.close();
+}
+
+void inventario::combos(map <int, vector<string>> combo, string dircombo)
+{
+    string combito = "Combo";
+    int num = 0;
+
+    auto v = combo.begin();
+    num = v->first;
+
+    combito += to_string(num) + ",";
+
+    for (auto i = v->second.begin(); i != v->second.end(); ++i){
+
+        combito += i[0];
+    }
+
+    escribir(dircombo, combito);
+}
+
 void inventario::imprimir()
 {
     ifstream invent;
@@ -25,36 +58,43 @@ void inventario::imprimir()
     }
 
     printElement("ID:", 7);
-    printElement("Producto:", 45);
+    printElement("Producto:", 25);
+    printElement("Paquetes:", 15);
     printElement("Unidades:", 15);
-    printElement("Costo:", 15);
+    printElement("Costo unidad en pesos:", 15);
     cout << endl;
 
     for (string line; getline (invent, line); ){
 
-        string product = "", uni = "", id = "", costo = "";
+        string product = "", uni = "", id = "", costo = "", paq = "";
 
 
-        for (unsigned int i = 0; i < line.find(","); ++i){ //Hasta que encuentre la primera ","
+        for (unsigned int i = 0; i < line.find(","); ++i){ //Hasta que encuentre la ","
             id += line.at(i); //String con el ID del producto
         }
 
-        for (unsigned int i = line.find(",") + 1; i < line.find(";"); ++i){
-            product += line.at(i);
+        for (unsigned int i = line.find(",") + 1; i < line.find(";"); ++i){ //Desde la "," hasta el";"
+            product += line.at(i); //String con el producto
         }
 
-        for (unsigned int i = line.find(";") + 1; i < line.find(":"); ++i){
-            uni += line.at(i);
+        for (unsigned int i = line.find(";") + 1; i < line.find("~"); ++i){ //Desde el ";" hasta la "~"
+            paq += line.at(i); //String con la cant de paquetes del producto
         }
 
-        for (unsigned int i = line.find(":") + 1; i < line.length(); ++i){
-            costo += line.at(i);
+        for (unsigned int i = line.find("~") + 1; i < line.find(":"); ++i){ //Desde la "~" hasta el ":"
+            uni += line.at(i); //String con la cant de unidades por paquetes
+        }
+
+        for (unsigned int i = line.find(":") + 1; i < line.length(); ++i){ //Desde el ":" hasta el final
+            costo += line.at(i); //String con el costo total de los paquetes
         }
 
         if (id != "ID"){
             printElement(id, 7);
-            printElement(product, 45);
+            printElement(product, 25);
+            printElement(paq, 15);
             printElement(uni, 15);
+            cout << "$";
             printElement(costo, 15);
             cout << endl;
         }
