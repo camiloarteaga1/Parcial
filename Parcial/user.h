@@ -14,7 +14,7 @@ public:
     User(string dir);
     ~User();
     void Register(string diraux, unsigned int semi); //Realiza el registro de usuarios
-    bool infouser(string nameusu, string claveusu, unsigned int semi); //Verifica el inicio de sesion
+    bool valuser(string nameusu, string claveusu, unsigned int semi); //Verifica el inicio de sesion
 
 private:
     string dirUser;

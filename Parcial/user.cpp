@@ -66,7 +66,7 @@ void User::Register(string diraux, unsigned int semi)
 
 }
 
-bool User::infouser(string nameusu, string claveusu, unsigned int semi)
+bool User::valuser(string nameusu, string claveusu, unsigned int semi)
 {
     int cont = 0;
     string ps = "", id = "", name = "";

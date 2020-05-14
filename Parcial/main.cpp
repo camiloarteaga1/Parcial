@@ -63,7 +63,7 @@ int main()
 int adm(int var, int &cont)
 {
     int opt = 0, wish = 0;
-    string id = "", unidades = "", ps, help = "Si", code;
+    string id = "", unidades = "", ps, help = "Si", code, val = "";
     bool aux = false;
     map <int, vector <string>> combos;
     vector <string> producto;
@@ -120,6 +120,7 @@ int adm(int var, int &cont)
                     producto.push_back(id);
                     producto.push_back(";");
 
+                    cout << "Recuerde no pasarse del numero de unidades por paquete." << endl;
                     cout << "Unidades a utilizar en el combo: ";
                     cin >> unidades;
 
@@ -132,7 +133,10 @@ int adm(int var, int &cont)
                         producto.push_back(":");
                     }
                     if (help == "No"){
-                        producto.push_back("|");
+                        producto.push_back(":|");
+                        cout << "Escriba el precio del combo: ";
+                        cin >> val;
+                        producto.push_back(val);
                     }
                 }
 
@@ -167,6 +171,7 @@ int adm(int var, int &cont)
                     producto.push_back(id);
                     producto.push_back(";");
 
+                    cout << "Recuerde no pasarse del numero de unidades por paquete." << endl;
                     cout << "Unidades a utilizar en el combo: ";
                     cin >> unidades;
 
@@ -179,7 +184,10 @@ int adm(int var, int &cont)
                         producto.push_back(":");
                     }
                     if (help == "No"){
-                        producto.push_back("|");
+                        producto.push_back(":|");
+                        cout << "Escriba el precio del combo: ";
+                        cin >> val;
+                        producto.push_back(val);
                     }
                 }
 
@@ -223,7 +231,7 @@ int user()
     User usuario(dirUser);
     int opt = 0;
     bool aux = false, help;
-    string id = "", pass = "";
+    string id = "", pass = "", combo = "", cant = "";
 
     system("cls");
 
@@ -242,7 +250,7 @@ int user()
             cout << "Escriba su contrasena: ";
             cin >> pass;
 
-            help = usuario.infouser(id, pass, semi);
+            help = usuario.valuser(id, pass, semi);
 
             if (help == true){
 
@@ -250,11 +258,17 @@ int user()
                 getch();
                 system("cls");
 
-                inventario combos;
+                inventario combitos;
                 cout << "Bienvenido al sistema de compras." << endl;
                 cout << "Los combos que ofrecemos son: " << endl;
 
-                combos.leer(dirDescripCombos);
+                combitos.leer(dirDescripCombos);
+
+                cout << "Escriba el numero del combo a comprar: ";
+                cin >> combo;
+
+                cout << "Cuantos desea: ";
+                cin >> cant;
             }
 
             else{

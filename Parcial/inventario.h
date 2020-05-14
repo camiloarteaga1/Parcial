@@ -19,6 +19,7 @@ public:
     void descript(int cont, string dirDescripCombos); //Recibe y guarda la descripcion del combo a ofrecer
     void combos(map <int, vector<string>>, string dircombo); //Crea los combos
     void leer(string dir); //Lee un archivo linea a linea mientras no sea el final e imprime la linea
+    int compra(string comb, string cant, string dircombo); //Realiza la compra del combo actualiza los datos del inventario y devuelve el dinero total a pagar
 
 private:
     const string dirInventario = "../Archivos/Inventario.txt";

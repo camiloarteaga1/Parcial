@@ -36,7 +36,7 @@ void inventario::combos(map <int, vector<string>> combo, string dircombo)
     auto v = combo.begin();
     num = v->first;
 
-    combito += to_string(num) + ",";
+    combito += to_string(num) + ":";
 
     for (auto i = v->second.begin(); i != v->second.end(); ++i){
 
@@ -124,7 +124,7 @@ void inventario::leer(string dir)
 
 void inventario::descript(int cont, string dirDescripCombos)
 {
-    string descript = "", combito = "Combo ";
+    string descript = "", combito = "Combo ", val = "";
 
     combito += to_string(cont) + ": ";
 
@@ -135,7 +135,69 @@ void inventario::descript(int cont, string dirDescripCombos)
 
     combito += descript;
 
+    cout << "Repita el valor del combo: ";
+    cin >> val;
+
+    combito += " $" + val;
+
     cout << "Descripcion del combo: " << combito << endl;
 
     escribir(dirDescripCombos, combito);
+}
+
+int inventario::compra(string comb, string cant, string dircombo)
+{
+
+    bool aux = false;
+
+    ifstream invent;
+
+    invent.open(dircombo, ios::in);
+
+    if(!invent.is_open()){ //Verifica si el archivo abrio exitosamente
+        std::cout << "Error al abrir el archivo" << endl;
+        exit(1);
+    }
+
+    for (string line; getline (invent, line); ){
+
+        string product = "", uni = "", idc = "", costo = "", cantip = "", idp = "";
+
+
+        for (unsigned int i = 0; i < line.find(":"); ++i){ //Hasta que encuentre la ","
+            idc += line.at(i); //String con el ID del combo
+        }
+        for (unsigned int i = 0; i < 4; ++i){
+            if (idc.at(i) != comb.at(i)) //Compara el ID del combo con los del archivo
+                break;
+
+            else if (i == idc.length())
+                aux = true;
+        }
+
+        if (aux == true){
+            for (unsigned int i = line.find(":") ; i == line.find("|"); ++i){ //Desde el ":" hasta el "|"
+                product += line.at(i); //String con el combo
+
+                for(unsigned int j = 0; j < product.find("|"); ++j){
+
+                    if (j == product.find(":")){
+                        ++j;
+                        idp = product[j];
+                    }
+                    else if (j == product.find(";")){
+                        ++j;
+                        cantip = product[j];
+
+                }
+
+            }
+            for (unsigned int i = line.find("|") + 1; i < line.length(); ++i){
+                costo = line.at(i);
+                costo = stoi(costo); //Debo continuar con otra funcion
+            }
+        }
+
+    }
+    invent.close();
 }
