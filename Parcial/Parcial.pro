@@ -6,9 +6,11 @@ CONFIG -= qt
 SOURCES += \
         encrypt.cpp \
         inventario.cpp \
-        main.cpp
+        main.cpp \
+        user.cpp
 
 HEADERS += \
     encrypt.h \
     inventario.h \
-    plantillas.h
+    plantillas.h \
+    user.h

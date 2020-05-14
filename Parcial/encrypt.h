@@ -9,6 +9,7 @@ using namespace std;
 class encrypt
 {
 public:
+    encrypt();
     encrypt(string a, string b);
     ~encrypt();
 
@@ -17,7 +18,6 @@ public:
     string bin_to_string(string bin); //Convierte de binario a string
     void convert(); //Convierte un string en binario
     void nuename(string dirtemp, string diruser); //Renombra un archivo
-    void escribir(string dir, string txt); //Escribe en un archivo el string recibido
 
 
 private:

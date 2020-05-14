@@ -16,12 +16,13 @@ public:
     inventario();
     ~inventario();
     void imprimir(); //Imprime el inventario para el admin
-    void descript(); //Guarda la descripcion del combo a ofrecer
+    void descript(int cont, string dirDescripCombos); //Recibe y guarda la descripcion del combo a ofrecer
     void combos(map <int, vector<string>>, string dircombo); //Crea los combos
+    void leer(string dir); //Lee un archivo linea a linea mientras no sea el final e imprime la linea
 
 private:
     const string dirInventario = "../Archivos/Inventario.txt";
-    string leer(string dir);
+
     void escribir(string dir, string txt); //Escribe en un archivo un string
 };
 

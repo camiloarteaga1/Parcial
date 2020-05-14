@@ -6,6 +6,11 @@ encrypt::encrypt(string a, string b)
     dir = b;
 }
 
+encrypt::encrypt()
+{
+
+}
+
 encrypt::~encrypt()
 {
 
@@ -202,20 +207,6 @@ string encrypt::leer(string dir)
     archivo.close(); //Cierra el archivo
 
     return txt;
-}
-
-//Ecribir en un archivo
-void encrypt::escribir(string dir, string txt)
-{
-    ofstream archivo;
-    archivo.open(dir, ios::app);
-    if (archivo.fail()){
-        cout << "No se pudo abrir el archivo";
-        exit(1);
-    }
-
-    archivo << txt << "\n";
-    archivo.close();
 }
 
 void encrypt::fun_a(int *px, int *py)

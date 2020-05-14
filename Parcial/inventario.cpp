@@ -102,7 +102,7 @@ void inventario::imprimir()
     invent.close();
 }
 
-string inventario::leer(string dir)
+void inventario::leer(string dir)
 {
     ifstream archivo;
     string txt;
@@ -116,21 +116,26 @@ string inventario::leer(string dir)
 
     while(!archivo.eof()) { //Lee linea a linea mientras no sea el final del archivo
         getline(archivo, txt);
+        cout << txt << endl;
     }
 
     archivo.close(); //Cierra el archivo
-
-    return txt;
 }
 
-void inventario::descript()
+void inventario::descript(int cont, string dirDescripCombos)
 {
-    string descript = "";
+    string descript = "", combito = "Combo ";
+
+    combito += to_string(cont) + ": ";
 
     cout << "Oferta del combo: ";
 
     cin.ignore(100, '\n');
     getline (cin, descript);
 
-    cout << "Descripcion del combo: " << descript << endl;
+    combito += descript;
+
+    cout << "Descripcion del combo: " << combito << endl;
+
+    escribir(dirDescripCombos, combito);
 }

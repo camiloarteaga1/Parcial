@@ -52,4 +52,17 @@ bool validacion(T psAdmin, T code)
 
     return true;
 }
+
+//Verifica si los caracteres ingrsados son numeros
+template <typename T>
+bool valnum (T num){
+
+    for(unsigned int i = 0; i < num.length(); ++i){ //Verifica si el string tiene caracteres no validos
+        //Rango caracteres numericos en el codigo ASCII
+        if (num.at(i) <= 47) return false;
+        if (num.at(i) >= 58) return false;
+    }
+    return true;
+}
+
 #endif // PLANTILLAS_H
