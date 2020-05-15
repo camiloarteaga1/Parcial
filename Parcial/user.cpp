@@ -121,13 +121,11 @@ bool User::valuser(string nameusu, string claveusu, unsigned int semi)
             cont = 1;
 
             cout << "\nBienvenido: " << name << "\nNumero identificacion: " << id << "\n" << endl;
-
             return aux;
         }
 
         else{
             aux = false;
-            return aux;
         }
     }
     input.close(); //Cierra el archivo
