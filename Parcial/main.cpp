@@ -18,19 +18,26 @@ const string diraux = "../Archivos/txtAux.txt"; //Direccion auxiliar, no hay que
 const string dirCombos = "../Archivos/Combos.txt"; //TXT con los combos creados por el admin
 const string dirDescripCombos = "../Archivos/DescripCombos.txt"; //Direccion descripcion de combos
 const string dirUser = "../Archivos/user.txt"; //Direccion descripcion de combos
+const string dirInventario = "../Archivos/Inventario.txt"; //Direccion inventario, está en inventario.h tambien
+const string dirInventarioActu = "../Archivos/InventarioActu.txt"; //Direccion inventario en ejecucion, está en inventario.h tambien
+const string dirfact = "../Archivos/dirfact.txt"; //Direccion facturas, está en inventario.h tambien
+const string dirtemp = "../Archivos/dirtemp.txt"; //Direccion temporal, está en inventario.h tambien
 
 //La clave del adm está codificada por defecto con esa semilla
 //Semilla codificacion
 unsigned int semi = 4;
 
 //Funciones
-int adm(int var, int &cont);
+int adm(int &var, int &cont);
 int user();
 
 int main()
 {
     int opt = 0, var = 1, cont = 1;
     bool conta = false;
+    inventario inv;
+    inv.Copy();
+
     cout << "BIENVENIDO A CINE KAKARIKO" << endl;
 
     while (conta == false){
@@ -42,13 +49,14 @@ int main()
         cout << "Opcion: ";
         cin >> opt;
 
-        if (opt == 1) var = adm(var, cont);
+        if (opt == 1) adm(var, cont);
 
         else if (opt == 2) user();
 
         else if (opt == 3){
             borrar(dirCombos);
             borrar(dirDescripCombos);
+            borrar(dirInventarioActu);
             conta = true;
         }
 
@@ -60,7 +68,7 @@ int main()
 }
 
 //Despliega el menu del adm y ejecuta sus procesos
-int adm(int var, int &cont)
+int adm(int &var, int &cont)
 {
     int opt = 0, wish = 0;
     string id = "", unidades = "", ps, help = "Si", code, val = "";
@@ -96,7 +104,7 @@ int adm(int var, int &cont)
     while (aux == false){
 
         cout << "Operacion a realizar: " << endl;
-        cout << "1.Crear combos" << "\n2.Salir" << endl;
+        cout << "1. Crear combos" << "\n2. Facturas" << "\n3. Inventario actual" << "\n4. Rellenar inventario" << "\n5. Salir" << endl;
         cout << "Opcion: ";
         cin >> opt;
 
@@ -113,7 +121,7 @@ int adm(int var, int &cont)
                 while (help == "Si"){
 
                     cout << "\nProductos disponibles: " << endl;
-                    inv.imprimir(); //Imprime el inventario disponible
+                    inv.imprimir(dirInventario); //Imprime el inventario disponible
 
                     cout << "\nIngrese el ID del producto para el combo: ";
                     cin >> id;
@@ -156,15 +164,19 @@ int adm(int var, int &cont)
                 ++var;
             }
 
-            cout << "Desea crear otro combo? 1 para si, 2 para no: ";
+            cout << "\nDesea crear otro combo? 1 para si, 2 para no: ";
             cin >> wish;
 
             while (wish == 1){
+                cout << "\nPresione enter para avanzar." << endl;
+                getch();
+                system("cls");
+
                 while (help == "Si"){
 
                     system("cls");
                     cout << "\nProductos disponibles: " << endl;
-                    inv.imprimir(); //Imprime el inventario disponible
+                    inv.imprimir(dirInventario); //Imprime el inventario disponible
 
                     cout << "\nIngrese el ID del producto para el combo: ";
                     cin >> id;
@@ -211,6 +223,34 @@ int adm(int var, int &cont)
         }
 
         else if (opt == 2){
+            system("cls");
+            string fecha;
+
+            while (help == "Si"){
+                cout << "Ingrese la fecha del dia a visualizar (dd/mm/aa) sin 0 inicial: ";
+                cin >> fecha;
+
+                inv.printfact(fecha);
+
+                cout << "Desea ingresar otra fecha? Mayuscula inicial Si o No: ";
+                cin >> help;
+            }
+        }
+        else if (opt == 3){
+            inv.imprimir(dirInventarioActu);
+
+            cout << "\nPresione enter para avanzar." << endl;
+            getch();
+            system("cls");
+        }
+        else if (opt == 4){
+            inv.Copy();
+            cout << "\nPresione enter para avanzar." << endl;
+            getch();
+            system("cls");
+        }
+
+        else if (opt == 5){
             aux = true;
             system("cls");
         }
@@ -222,7 +262,7 @@ int adm(int var, int &cont)
             cout << "Ingrese un numero valido." << endl;
         }
     }
-    return var;
+    return 0;
 }
 
 //Despliega el menu del usuario
@@ -230,8 +270,9 @@ int user()
 {
     User usuario(dirUser);
     int opt = 0;
-    bool aux = false, help;
-    string id = "", pass = "", combo = "", cant = "";
+    bool aux = false, help, relleno = false;
+    string id = "", pass = "", combo = "", cant = "", silla = "", sala = "", fecha = "";
+    vector <string> datos;
 
     system("cls");
 
@@ -260,6 +301,9 @@ int user()
 
                 inventario combitos;
                 cout << "Bienvenido al sistema de compras." << endl;
+                cout << "Ingrese la fecha del dia (dd/mm/aa) sin 0 inicial: ";
+                cin >> fecha;
+
                 cout << "Los combos que ofrecemos son: " << endl;
 
                 combitos.leer(dirDescripCombos);
@@ -270,7 +314,25 @@ int user()
                 cout << "Cuantos desea: ";
                 cin >> cant;
 
-                combitos.compra(combo, cant, dirCombos);
+                cout << "Cual es su asiento: ";
+                cin >> silla;
+
+                cout << "De que sala: ";
+                cin >> sala;
+
+                datos.push_back(combo);
+                datos.push_back(cant);
+                datos.push_back(id);
+                datos.push_back(silla);
+                datos.push_back(sala);
+                datos.push_back(dirCombos);
+                datos.push_back(fecha);
+                relleno = combitos.compra(datos);
+                datos.clear();
+                if (relleno == true){
+                    cout << "Se debe rellenar el inventario." << endl;
+                    aux = true;
+                }
             }
 
             else{
@@ -283,7 +345,10 @@ int user()
         }
 
         else if (opt == 3){
-            cout << "Regrese pronto! :)" << endl;
+            cout << "\nRegrese pronto! :)" << endl;
+            cout << "\nPresione enter para avanzar." << endl;
+            getch();
+            system("cls");
             aux = true;
         }
         else{

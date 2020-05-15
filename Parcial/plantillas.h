@@ -7,6 +7,15 @@
 
 using namespace std;
 
+template<typename T>
+void rename(T dirtemp, T dircamb)
+{
+    int newname;
+    newname = rename(dirtemp.c_str(), dircamb.c_str()); //Renombra el archivo temp por el de user
+
+    if (newname != 0)
+        perror("Error al renombrar archivo.");
+}
 
 //Borra un archivo
 template <typename T>
@@ -14,6 +23,7 @@ void borrar(T dir)
 {
     if(remove(dir.c_str()) != 0) //Elimina un archivo
        perror("Error al borrar archivo!.");
+    system("cls");
 }
 
 //Lee lo de un archivo y lo asigna a una variable

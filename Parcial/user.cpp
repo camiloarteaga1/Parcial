@@ -77,6 +77,7 @@ bool User::valuser(string nameusu, string claveusu, unsigned int semi)
 
     for (string line; getline (input, line); )
     {
+        aux = false;
         ps = "";
         id = "";
         name = "";
