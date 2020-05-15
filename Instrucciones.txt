@@ -1,6 +1,6 @@
 El programa está diseñado para windows.
 
-La contraseña del admin es "Benvenute". Sin las comillas.
+La contraseña del admin es "Benvenute". Sin las comillas. Está encriptada con semilla 4.
 
 Los combos no se guardan si se sale de la manera correcta. Estos se deben crear siempre que se inicie el programa, como mínimo 3 obligatoriamente.
 
