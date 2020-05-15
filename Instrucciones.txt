@@ -1,0 +1,7 @@
+El programa está diseñado para windows.
+
+La contraseña del admin es "Benvenute". Sin las comillas.
+
+Los combos no se guardan si se sale de la manera correcta. Estos se deben crear siempre que se inicie el programa, como mínimo 3 obligatoriamente.
+
+Leer muy bien lo que dice cada instruccion dentro del mismo código.

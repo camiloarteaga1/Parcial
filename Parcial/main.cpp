@@ -1,6 +1,6 @@
-//#include <iostream>
-//#include <fstream>
-//#include <string.h>
+#include <iostream>
+#include <fstream>
+#include <string.h>
 #include <windows.h>
 #include <conio.h>
 #include <map>
@@ -73,8 +73,8 @@ int adm(int &var, int &cont)
     int opt = 0, wish = 0;
     string id = "", unidades = "", ps, help = "Si", code, val = "";
     bool aux = false;
-    map <int, vector <string>> combos;
-    vector <string> producto;
+    map <int, vector <string>> combos; //Para crear los combos
+    vector <string> producto; //Para crear los combos
     inventario inv;
 
     cout << "\nIngresando como administrador" << endl;
@@ -104,13 +104,14 @@ int adm(int &var, int &cont)
     while (aux == false){
 
         cout << "Operacion a realizar: " << endl;
-        cout << "1. Crear combos" << "\n2. Facturas" << "\n3. Inventario actual" << "\n4. Rellenar inventario" << "\n5. Salir" << endl;
+        cout << "1. Crear combos" << "\n2. Facturas" << "\n3. Inventario actual";
+        cout << "\n4. Agregar producto al inventario" << "\n5. Rellenar inventario" << "\n6. Salir" << endl;
         cout << "Opcion: ";
         cin >> opt;
 
         if (opt == 1){ //Se empieza a crear el combo de acuerdo al inventario
 
-            while (var <= 3){
+            while (var <= 3){ //Obliga a crear mínimo 3 combos
 
                 cout << "\nPresione enter para avanzar." << endl;
                 getch();
@@ -150,9 +151,9 @@ int adm(int &var, int &cont)
 
                 cout << "Combo creado" << endl;
 
-                combos.insert({cont, producto}); //Se agrega el combo al mapa
+                combos.insert({cont, producto}); //Se agrega el vector del combo al mapa
 
-                inv.combos(combos, dirCombos);
+                inv.combos(combos, dirCombos); //Se crean los combos en un archivo
 
                 help = "Si";
 
@@ -167,7 +168,7 @@ int adm(int &var, int &cont)
             cout << "\nDesea crear otro combo? 1 para si, 2 para no: ";
             cin >> wish;
 
-            while (wish == 1){
+            while (wish == 1){ //Por si quiere hacer otro combo
                 cout << "\nPresione enter para avanzar." << endl;
                 getch();
                 system("cls");
@@ -207,7 +208,7 @@ int adm(int &var, int &cont)
 
                 combos.insert({cont, producto}); //Se agrega el combo al mapa
 
-                inv.combos(combos, dirCombos);
+                inv.combos(combos, dirCombos); //Se crean los combos en un archivo
 
                 help = "Si";
 
@@ -222,7 +223,7 @@ int adm(int &var, int &cont)
             }
         }
 
-        else if (opt == 2){
+        else if (opt == 2){ //Para imprimir las facturas
             system("cls");
             string fecha;
 
@@ -230,28 +231,31 @@ int adm(int &var, int &cont)
                 cout << "Ingrese la fecha del dia a visualizar (dd/mm/aa) sin 0 inicial: ";
                 cin >> fecha;
 
-                inv.printfact(fecha);
+                inv.printfact(fecha); //Imprime las facturas dependiendo de la fecha ingresada
 
                 cout << "Desea ingresar otra fecha? Mayuscula inicial Si o No: ";
                 cin >> help;
             }
         }
         else if (opt == 3){
-            inv.imprimir(dirInventarioActu);
+            inv.imprimir(dirInventarioActu); //Imprime el inventario con las modificaciones
 
             cout << "\nPresione enter para avanzar." << endl;
             getch();
             system("cls");
         }
         else if (opt == 4){
-            inv.Copy();
+            inv.add(); //Agrega los productos al inventario
+        }
+        else if (opt == 5){
+            inv.Copy(); //Rellena el inventario de nuevo
             cout << "\nPresione enter para avanzar." << endl;
             getch();
             system("cls");
         }
 
-        else if (opt == 5){
-            aux = true;
+        else if (opt == 6){
+            aux = true; //Para salir
             system("cls");
         }
         else if (wish == 2){
@@ -272,7 +276,7 @@ int user()
     int opt = 0;
     bool aux = false, help, relleno = false;
     string id = "", pass = "", combo = "", cant = "", silla = "", sala = "", fecha = "";
-    vector <string> datos;
+    vector <string> datos; //Guarda los datos de la compra del usuario
 
     system("cls");
 
@@ -283,7 +287,7 @@ int user()
         cin >> opt;
 
         if (opt == 1){
-            usuario.Register(diraux, semi);
+            usuario.Register(diraux, semi); //Registra al usuario si es que no lo esta
         }
         else if (opt == 2){
             cout << "Escriba su documento: ";
@@ -291,7 +295,7 @@ int user()
             cout << "Escriba su contrasena: ";
             cin >> pass;
 
-            help = usuario.valuser(id, pass, semi);
+            help = usuario.valuser(id, pass, semi); //Verifica que el usuario esté registrado
 
             if (help == true){
 
@@ -306,7 +310,7 @@ int user()
 
                 cout << "Los combos que ofrecemos son: " << endl;
 
-                combitos.leer(dirDescripCombos);
+                combitos.leer(dirDescripCombos); //Le presenta al usuario los combos disponibles
 
                 cout << "Escriba el numero del combo a comprar: ";
                 cin >> combo;
@@ -326,11 +330,11 @@ int user()
                 datos.push_back(silla);
                 datos.push_back(sala);
                 datos.push_back(dirCombos);
-                datos.push_back(fecha);
-                relleno = combitos.compra(datos);
+                datos.push_back(fecha);            //Va guardando los datos ingresados en el vector para luego ser procesados
+                relleno = combitos.compra(datos);  //Realiza el proceso de compra
                 datos.clear();
                 if (relleno == true){
-                    cout << "Se debe rellenar el inventario." << endl;
+                    cout << "Se debe rellenar el inventario." << endl; //Si el inventario no puede cumplir con la venta
                     aux = true;
                 }
             }

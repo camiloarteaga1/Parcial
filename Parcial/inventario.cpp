@@ -28,7 +28,8 @@ void inventario::escribir(string dir, string txt)
     archivo.close();
 }
 
-void inventario::combos(map <int, vector<string>> combo, string dircombo) //Guarda los combos
+//Guarda los combos
+void inventario::combos(map <int, vector<string>> combo, string dircombo)
 {
     string combito = "";
     int num = 0;
@@ -46,6 +47,7 @@ void inventario::combos(map <int, vector<string>> combo, string dircombo) //Guar
     escribir(dircombo, combito);
 }
 
+//Imprime el inventario que se desee
 void inventario::imprimir(string dir)
 {
     ifstream invent;
@@ -108,6 +110,7 @@ void inventario::imprimir(string dir)
     invent.close();
 }
 
+//Lee un archivo
 void inventario::leer(string dir)
 {
     ifstream archivo;
@@ -128,6 +131,7 @@ void inventario::leer(string dir)
     archivo.close(); //Cierra el archivo
 }
 
+//Guarda la descripcion de los combos
 void inventario::descript(int cont, string dirDescripCombos)
 {
     string descript = "", combito = "Combo ", val = "";
@@ -148,10 +152,11 @@ void inventario::descript(int cont, string dirDescripCombos)
 
     cout << "Descripcion del combo: " << combito << endl;
 
-    escribir(dirDescripCombos, combito);
+    escribir(dirDescripCombos, combito); //Escribe la descrip en un archivo dedicado a ello
 }
 
-bool inventario::compra(vector <string> datos)
+//Realiza el proceso de compra por parte del usuario
+bool inventario::compra(vector <string> datos) //Revibe el vector con los datos de compra
 {
 
     int A, dev;
@@ -209,7 +214,7 @@ bool inventario::compra(vector <string> datos)
                     cantip = to_string(stoi(cantip)*stoi(datos[1]));
                     data.push_back(cantip);
                     if (data[0] != "|" || data[1] != "|"){
-                        relleno = modinv(data);
+                        relleno = modinv(data); //Modifica el inventario de acuerdo al vector que va obteniendo los datos del combo del usuario
                         idp = "";
                         cantip = "";
                     }
@@ -222,20 +227,20 @@ bool inventario::compra(vector <string> datos)
                 costo += line.at(i);
             }
 
-            costo = to_string(stoi(costo) * stoi(datos[1]));
+            costo = to_string(stoi(costo) * stoi(datos[1])); //Guarda el costo total de la compra
             cout << "Total a pagar $" << costo << endl;
 
             if (relleno == false){
                 cout << "Ingrese la cantidad con la que va a pagar: ";
                 cin >> A;
-                dev = pago(stoi(costo), A);
+                dev = pago(stoi(costo), A); //Realiza el proceso de pago de acuerdo al problema 1
 
 
                 datos.push_back(costo);
                 datos.push_back(to_string(A));
-                datos.push_back(to_string(dev));
+                datos.push_back(to_string(dev)); //Se agregan el costo, dinero ingresado y devuelta
 
-                genfact(datos);
+                genfact(datos); //Genera la factura al usuario, mostrando los datos de compra y sus datos en el cine
             }
             else{
                 cout << "Se debe rellenar el inventario, no se puede realizar la compra." << endl;
@@ -247,6 +252,7 @@ bool inventario::compra(vector <string> datos)
     return relleno;
 }
 
+//Modifica el inventario
 bool inventario::modinv(vector <string> mod)
 {
     bool aux = false, relleno = false;
@@ -278,7 +284,7 @@ bool inventario::modinv(vector <string> mod)
                 aux = true;
         }
 
-        if (aux == true){ //True si la clave esta en el archivo
+        if (aux == true){ //True si esta en el ID de producto a modificar en el archivo
             aux = false;
 
             for (unsigned int i = line.find(",") + 1; i < line.find(";"); ++i){ //Desde la "," hasta el";"
@@ -312,23 +318,24 @@ bool inventario::modinv(vector <string> mod)
                 total = to_string(cantip); //Convierte el saldo a un string
                 linea = idc + ',' + product + ';' + paq + "~" + uni + ":" + total + "|" + costo; //Se crea un string para guardar la informacion
 
-                escribir(dirtemp, linea); //Actualiza la informacion en el archivo
+                escribir(dirtemp, linea); //Actualiza la informacion en el archivo temporal
                 relleno = false;
             }
         }
 
         else{
-            escribir(dirtemp, line); //Actualiza la informacion en el archivo
+            escribir(dirtemp, line); //Actualiza la informacion en el archivo en el archivo temporal
         }
     }
     invent.close(); //Se cierra el archivo
 
-    borrar(dirInventarioActu);
-    rename(dirtemp, dirInventarioActu);
+    borrar(dirInventarioActu); //Borra el archivo sin los cambios
+    rename(dirtemp, dirInventarioActu); //Se renombra el archivo temporal para posteriormente ser utilizado
 
     return relleno;
 }
 
+//Genera la factura del usuario y se la da a conocer
 void inventario::genfact(vector<string> fact)
 {
     string compra;
@@ -344,7 +351,7 @@ void inventario::genfact(vector<string> fact)
 
     cout << "Factura de la compra:" << endl;
     cout << "Fecha: " << fact[6] << endl;
-    cout << " Usuario: " << fact[2];
+    cout << "Usuario: " << fact[2];
     cout << " Asiento: " << fact[3];
     cout << " Sala: " << fact[4] << endl;
     cout << "Valor de la compra " << fact[7];
@@ -356,6 +363,7 @@ void inventario::genfact(vector<string> fact)
     system("cls");
 }
 
+//Imprime las facturas pedidas por el administrador de acuerdo a la fecha recibida
 void inventario::printfact(string fecha)
 {
     int  ctotal = 0;
@@ -409,7 +417,46 @@ void inventario::printfact(string fecha)
             cout << endl;
         }
     }
+    cout << "Ventas del dia en dinero: " << ctotal << endl;
+    cout << "\nPresione enter para avanzar." << endl;
+    getch();
+    system("cls");
     invent.close();
+}
+
+//Permite agregar productos al inventario
+void inventario::add()
+{
+    string id = "", product = "", paq = "", cantxp = "", tcant = "", precio = "", line = "";
+    imprimir(dirInventario); //Imprime el inventario antes de agregar los productos
+
+    cout << "\nAgregue el producto teniendo en cuenta lo anterior." << endl;
+
+    cout << "\nIngrese el siguiente ID del producto, tenga en cuenta que va despues del ultimo en pantalla: ";
+    cin >> id;
+    line += id + ",";
+    cout << "\nIngrese el producto: ";
+    cin.ignore(100, '\n');
+    getline(cin, product);
+    line += product + ";";
+    cout << "\nIngrese el numero de paquetes: ";
+    cin >> paq;
+    line += paq + "~";
+    cout << "\nIngrese el numero de unidades por paquete: ";
+    cin >> cantxp;
+    line += cantxp + ":";
+    tcant = to_string(stoi(paq)*stoi(cantxp));
+    cout << "\nEl numero total de unidades es: " << tcant << endl;
+    line += tcant + "|";
+    cout << "\nIngrese el precio por unidad: ";
+    cin >> precio;
+    line += precio;
+
+    escribir(dirInventario, line); //Modifica el inventario agregando el producto
+    Copy();
+    cout << "\nPresione enter para avanzar." << endl;
+    getch();
+    system("cls");
 }
 
 //Copia un archivo de texto para rellenar el inventario
@@ -424,10 +471,10 @@ void inventario::Copy()
         exit(1);
     }
 
-    borrar(dirInventarioActu);
+    borrar(dirInventarioActu); //Borra el inventario vacio
 
     for (string line; getline (invent, line); ){
-        escribir(dirInventarioActu, line);
+        escribir(dirInventarioActu, line); //Lo escribe de nuevo
     }
 
     invent.close();
@@ -442,7 +489,7 @@ int inventario::pago(int costo, int A){
     A = A - costo;
     dev = A;
 
-    cout<<"Billetes necesarios:" << endl;
+    cout<<"\nBilletes necesarios:" << endl;
 
     for (int i=0;i<10;i++){
         for (int j=0;A>=money[i];j++){
@@ -453,6 +500,7 @@ int inventario::pago(int costo, int A){
         cout << money_names[i] << ": " << money_count[i] << endl;
     }
     cout << "Restante: " << A << endl;
+    cout << "\nDevuelta: " << dev << endl; //Da la devuelta
     cout << "\nPresione enter para avanzar." << endl;
     getch();
     system("cls");

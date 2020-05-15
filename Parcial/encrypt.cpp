@@ -16,7 +16,7 @@ encrypt::~encrypt()
 
 }
 
-//Metodo de codificacion 2
+//Metodo de codificacion 2 practica 3
 string encrypt::codificacion2(unsigned int seed)
 {
 
@@ -60,7 +60,7 @@ string encrypt::codificacion2(unsigned int seed)
     return txt;
 }
 
-//Metodo de decodificacion 2
+//Metodo de decodificacion 2 practica 3
 string encrypt::decodificacion2(string bin, unsigned int seed)
 {
     unsigned int Jump = seed, largo = bin.length();
@@ -209,6 +209,7 @@ string encrypt::leer(string dir)
     return txt;
 }
 
+//Para la codificacion y decodificacion
 void encrypt::fun_a(int *px, int *py)
 {
     int tmp = *px;
@@ -216,6 +217,7 @@ void encrypt::fun_a(int *px, int *py)
     *py = tmp;
 }
 
+//Para la codificacion
 void encrypt::fun_b(int a[], int tam)
 {
     int f, l, k = a[tam-1];
@@ -230,6 +232,7 @@ void encrypt::fun_b(int a[], int tam)
     a[0] = k;
 }
 
+//Para la decodificacion
 void encrypt::desfun_b(int a[], int tam)
 {
     int f, l;
@@ -268,14 +271,4 @@ int encrypt::dig_num(int num)
         ++k;
     }
     return k;
-}
-
-//Renombra un archivo
-void encrypt::nuename(string dirtemp, string diruser)
-{
-    int newname;
-    newname = rename(dirtemp.c_str(), diruser.c_str()); //Renombra el archivo temp por el de user
-
-    if (newname != 0)
-        perror("Error al renombrar archivo.");
 }

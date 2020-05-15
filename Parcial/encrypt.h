@@ -17,7 +17,6 @@ public:
     string decodificacion2(string bin, unsigned int seed); //Decodifica lo que haya en un archivo de texto
     string bin_to_string(string bin); //Convierte de binario a string
     void convert(); //Convierte un string en binario
-    void nuename(string dirtemp, string diruser); //Renombra un archivo
 
 
 private:

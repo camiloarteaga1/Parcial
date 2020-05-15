@@ -2,3 +2,5 @@ Fecha = 14/5/2020|Usuario: 1001 Asiento: k4 Sala: 5~Valor de la compra; 12000*Di
 Fecha = 14/5/2020|Usuario: 1001 Asiento: k4 Sala: 7~Valor de la compra; 12000*Dinero ingresado: 20000 Devuelta: 8000
 Fecha = 14/5/2020|Usuario: 1001 Asiento: k4 Sala: 5~Valor de la compra; 12000*Dinero ingresado: 13000 Devuelta: 1000
 Fecha = 14/5/2020|Usuario: 1001 Asiento: k4 Sala: 7~Valor de la compra; 12000*Dinero ingresado: 14000 Devuelta: 2000
+Fecha = 14/5/2020|Usuario: 1001 Asiento: k4 Sala: 6~Valor de la compra; 14000*Dinero ingresado: 50000 Devuelta: 36000
+Fecha = 15/5/2020|Usuario: 1001 Asiento: J47 Sala: 8~Valor de la compra; 21000*Dinero ingresado: 30000 Devuelta: 9000

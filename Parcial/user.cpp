@@ -10,6 +10,8 @@ User::~User()
 
 }
 
+
+//Registra al usuario
 void User::Register(string diraux, unsigned int semi)
 {
     string id = "", psusu = "", name = "", data = "", codi = "", ps, txt;
@@ -52,7 +54,7 @@ void User::Register(string diraux, unsigned int semi)
 
     data += name; //String con los datos del usuario
 
-    encrypt code(data, diraux);
+    encrypt code(data, diraux); //Se inicializa la clase encrypt
 
     code.convert(); //Convierte a binario los datos
 
@@ -66,6 +68,7 @@ void User::Register(string diraux, unsigned int semi)
 
 }
 
+//Valida que el usuario ya esté registrado
 bool User::valuser(string nameusu, string claveusu, unsigned int semi)
 {
     int cont = 0;

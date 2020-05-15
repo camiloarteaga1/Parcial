@@ -24,6 +24,7 @@ public:
     bool compra(vector <string> datos); //Realiza la compra del combo actualiza los datos del inventario y devuelve el dinero total a pagar
     void printfact(string fecha); //Imprime las ventas
     void Copy(); //Rellena el inventario
+    void add(); //Agrega productos al inventario
 
 private:
     const string dirInventario = "../Archivos/Inventario.txt";

@@ -7,6 +7,7 @@
 
 using namespace std;
 
+//Renombra un archivo
 template<typename T>
 void rename(T dirtemp, T dircamb)
 {
